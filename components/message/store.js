@@ -1,16 +1,6 @@
-const db = require('mongoose')
-const chalk = require('chalk')
-const password = require('./password')
-const Model = require('./model')
 
-const url = password.uri
-db.Promise = global.Promise
-db.connect(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('[db]: Connected successfully'))
-  .catch(e => console.error(chalk.red(`[db Error]: ${e}`)))
+const chalk = require('chalk')
+const Model = require('./model')
 
 
 
