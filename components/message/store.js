@@ -1,8 +1,9 @@
 const db = require('mongoose')
 const chalk = require('chalk')
 const password = require('./password')
+const Model = require('./model')
 
-const url = `mongodb+srv://db_user_nodeServer:${password.password}V@cluster0.izd6p.mongodb.net/${password.dataBase}?retryWrites=true&w=majority`
+const url = password.uri
 db.Promise = global.Promise
 db.connect(url, {
   useNewUrlParser: true,
@@ -14,17 +15,30 @@ db.connect(url, {
 
 
 function addMessage(message) {
-  list.push(message)
+  // list.push(message)
+  const myMessage = new Model(message)
+  myMessage.save()
 }
 
-function getMessage(){
-  return list
+async function getMessage(){
+  // return list
+  const messages = await Model.find()
+  return messages
+}
+
+async function updateText (id, message) {
+  const foundMessage = await Model.findOne({
+    _id: id,
+  })
+  foundMessage.message = message
+  const newMessage = await foundMessage.save()
+  return newMessage
 }
 
 module.exports = {
   add: addMessage,
-  list: getMessage
+  list: getMessage,
   //get
-  //update
+  update: updateText
   //delete
 }
