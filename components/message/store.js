@@ -15,14 +15,16 @@ db.connect(url, {
 
 
 function addMessage(message) {
-  // list.push(message)
   const myMessage = new Model(message)
   myMessage.save()
 }
 
-async function getMessage(){
-  // return list
-  const messages = await Model.find()
+async function getMessage(filterUser){
+  let filter = {}
+  if (filterUser != null){
+    filter = {user: filterUser}
+  }
+  const messages = await Model.find(filter)
   return messages
 }
 
@@ -35,10 +37,15 @@ async function updateText (id, message) {
   return newMessage
 }
 
+function deleteText(id) {
+  return Model.deleteOne({
+    _id: id
+  })
+}
+
 module.exports = {
   add: addMessage,
   list: getMessage,
-  //get
-  update: updateText
-  //delete
+  update: updateText,
+  delete: deleteText
 }

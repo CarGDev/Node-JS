@@ -4,7 +4,8 @@ const response = require('../../network/response')
 const controller = require('./controller')
 
 router.get('/', function (req, res) {
-  controller.getMessage()
+  const filterMessage = req.query.user || null
+  controller.getMessage(filterMessage)
     .then((messageList) => {
       response.success(req, res, messageList, 200)
     })
@@ -35,5 +36,14 @@ router.patch('/:id', function (req, res) {
     })
 })
 
+router.delete('/:id', function(req, res) {
+  controller.deleteMessage(req.params.id)
+    .then(() => {
+      response.success(req, res, `Usuario ${req.params.id} eliminado`, 200)
+    })
+    .catch(e => {
+      response.error(req, res, 'Interna error', 500, e)
+    })
+})
 
 module.exports = router
