@@ -112,3 +112,6 @@ dist
 
 #PasswordDB
 components/message/password.js
+
+#Images
+public/files/*

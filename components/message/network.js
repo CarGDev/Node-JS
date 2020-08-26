@@ -2,6 +2,11 @@ const express = require('express')
 const router = express.Router()
 const response = require('../../network/response')
 const controller = require('./controller')
+const multer = require('multer');
+
+const upload = multer({
+  dest: 'public/files/',
+})
 
 router.get('/', function (req, res) {
   const filterMessage = req.query.user || null
@@ -14,15 +19,14 @@ router.get('/', function (req, res) {
     })
 })
 
-router.post('/', function (req, res) {
-
-  controller.addMessage(req.body.user, req.body.message)
-    .then((fullMessage) => {
-      response.success(req, res, fullMessage, 201)
-    })
-    .catch (e => {
-      response.error(req, res, 'Invalid information', 400, 'Login error')
-    })
+router.post('/', upload.single('file'), function (req, res) {
+  controller.addMessage(req.body.chat, req.body.user, req.body.message, req.file)
+      .then((fullMessage) => {
+          response.success(req, res, fullMessage, 201)
+      })
+      .catch(e => {
+          response.error(req, res, 'Invalid information', 400, 'Login error')
+      })
 })
 
 router.patch('/:id', function (req, res) {
