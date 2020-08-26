@@ -1,8 +1,5 @@
-
 const chalk = require('chalk')
 const Model = require('./model')
-
-
 
 function addMessage(message) {
   const myMessage = new Model(message)
@@ -10,12 +7,24 @@ function addMessage(message) {
 }
 
 async function getMessage(filterUser){
-  let filter = {}
-  if (filterUser != null){
-    filter = {user: filterUser}
-  }
-  const messages = await Model.find(filter)
-  return messages
+  return new Promise((resolve, reject) => {
+    let filter = {}
+    if (filterUser != null){
+      filter = {user: filterUser}
+    }
+    Model.find(filter)
+      .populate('user')
+      .exec((error, populated) => {
+        if (error) {
+          reject(error)
+          return false
+        }
+        resolve(populated)
+      })
+      /* .catch(e => {
+        reject(e)
+      }) */
+  })
 }
 
 async function updateText (id, message) {
