@@ -1,0 +1,16 @@
+{
+  "name": "node.js-server",
+  "version": "1.0.0",
+  "description": "Creation of server in node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "server"
+  ],
+  "author": "Carlos Gutierrez",
+  "license": "MIT"
+}
