@@ -1,17 +1,17 @@
-const chalk = require('chalk')
 const store = require('./store')
+const socket = require('../../socket').socket
 
 function addMessage(chat, user, message, file) {
   return new Promise((resolve, reject) => {
       if (!chat || !user || !message) {
-          console.error('[messageController] No hay chat usuario o mensaje');
-          reject('Los datos son incorrectos');
-          return false;
+          console.error('[messageController] No hay chat usuario o mensaje')
+          reject('Los datos son incorrectos')
+          return false
       }
 
-      let fileUrl = '';
+      let fileUrl = ''
       if (file) {
-          fileUrl = `http://localhost:3000/app/files/${file.filename}.jpg`;
+          fileUrl = `http://localhost:3000/app/files/${file.filename}.jpg`
       }
 
       const fullMessage = {
@@ -20,12 +20,11 @@ function addMessage(chat, user, message, file) {
           message: message,
           date: new Date(),
           file: fileUrl,
-      };
-  
-      store.add(fullMessage);
-
-      resolve(fullMessage);
-  });
+      }
+      store.add(fullMessage)
+      socket.io.emit('message', fullMessage)
+      resolve(fullMessage)
+  })
 }
 
 function getMessage(filterUser) {
