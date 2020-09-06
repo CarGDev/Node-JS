@@ -1,15 +1,15 @@
 const chalk = require('chalk')
 const Model = require('./model')
 
-function addMessage(message) {
+function addMessage (message) {
   const myMessage = new Model(message)
   myMessage.save()
 }
 
-async function getMessage(filterUser){
+async function getMessage(filterUser) {
   return new Promise((resolve, reject) => {
     let filter = {}
-    if (filterUser != null){
+    if (filterUser != null) {
       filter = {user: filterUser}
     }
     Model.find(filter)
