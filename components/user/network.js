@@ -3,7 +3,7 @@ const router = express.Router()
 const response = require('../../network/response')
 const controller = require('./controller')
 
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
   controller.addUser(req.body.name)
     .then(data => {
       response.success(req, res, data, 201)
@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
     })
 })
 
-router.get('/', function(req, res){
+router.get('/', function (req, res) {
   const filterMessage = req.query.name || null
   controller.getUser(filterMessage)
     .then((messageList) => {
@@ -34,7 +34,7 @@ router.patch('/:id', function (req, res) {
     })
 })
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id', function (req, res) {
   controller.deleteUser(req.params.id)
     .then(() => {
       response.success(req, res, `Usuario ${req.params.id} eliminado`, 200)

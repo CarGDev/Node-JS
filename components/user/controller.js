@@ -12,7 +12,7 @@ function addUser (name) {
 }
 
 function getUser (filterUser) {
-  return new Promise ((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     resolve(store.get(filterUser))
   })
 }
@@ -28,7 +28,7 @@ function updateUser (id, name) {
   })
 }
 
-function deleteUser(id) {
+function deleteUser (id) {
   return new Promise(async (resolve, reject) => {
     if (!id) {
       reject('Invalid Id')

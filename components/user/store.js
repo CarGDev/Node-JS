@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+// const chalk = require('chalk')
 const Model = require('./model')
 
 function addUser (user) {
@@ -6,10 +6,10 @@ function addUser (user) {
   return myUser.save()
 }
 
-async function getUser (filterUser){
+async function getUser (filterUser) {
   let filter = {}
-  if (filterUser != null){
-    filter = {name: filterUser}
+  if (filterUser != null) {
+    filter = { name: filterUser }
   }
   const messages = await Model.find(filter)
   return messages
@@ -17,14 +17,14 @@ async function getUser (filterUser){
 
 async function updateUser (id, name) {
   const foundMessage = await Model.findOne({
-    _id: id,
+    _id: id
   })
   foundMessage.name = name
   const newMessage = await foundMessage.save()
   return newMessage
 }
 
-function deleteUser(id) {
+function deleteUser (id) {
   return Model.deleteOne({
     _id: id
   })
